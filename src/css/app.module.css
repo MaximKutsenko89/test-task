@@ -1,0 +1,48 @@
+.app {
+   display: flex;
+}
+.aside {
+   flex: 1 0 20%;
+   min-height: 100vh;
+   height: 100%;
+   padding: 10px;
+   background-color: #2b2f3e;
+   color: var(--white);
+   text-align: center;
+}
+
+.asideTitle {
+   margin-bottom: 0.5rem;
+   font-family: inherit;
+   font-weight: 500;
+   line-height: 1.2;
+   font-size: 2rem;
+   text-align: center;
+}
+.asideSubTitle {
+   color: #5b5d63;
+   text-align: center;
+}
+.mainContent {
+   flex: 1 0 80%;
+   padding: 30px 10px;
+}
+.mainWrap {
+   display: flex;
+   gap: 20px;
+   flex-wrap: wrap;
+}
+@media(max-width:1200px){
+   .mainWrap{
+      flex-direction: column
+   };
+}
+@media (max-width: 767px) {
+   .app {
+      flex-direction: column;
+   }
+   .aside {
+      min-height: auto;
+      padding: 20px;
+   }
+}

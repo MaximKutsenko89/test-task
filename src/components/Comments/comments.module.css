@@ -1,0 +1,50 @@
+.comments {
+   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+   padding: 0.71rem;
+   flex: 1;
+   color: var(--gray);
+   display: flex;
+   flex-direction: column;
+   gap: 0.71rem;
+}
+.commentsItem {
+    display: flex;
+    align-items: center;
+    gap: 0.71rem;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    margin-bottom: 0.71rem;
+    padding: 0 0 0 0.71rem;
+}
+.commentsColor {
+    width: 50px;
+    height: 50px;
+}
+.commentsText {
+    color: var(--dark);
+}
+.commentsForm {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    gap: 0.71rem; 
+    min-height: 60px;
+    width: 100%;
+}
+.commentsForm input {
+    flex: 1 ;
+    height: 100%;
+    width: 70px;
+
+}
+.commentsForm textarea {
+    flex: 3;
+    height: 100%;
+    display: block;
+    width: 100%;
+
+}
+.commentsForm button {
+    flex: 1;
+    height: 100%;
+}
