@@ -1,12 +1,12 @@
 export type InitialState = {
    posts: Post[];
-   activeId: Post | null;
 };
 
 export type Post = {
    id: string;
    name: string;
    comments: Comment[];
+   active:boolean
 };
 
 export type Comment = {

@@ -5,9 +5,9 @@ import { postsState, addComment } from "../../redux/postsReducer";
 import styles from "./comments.module.css";
 
 export const Comments = () => {
-   const { activeId } = useAppSelector(postsState);
+   const { posts } = useAppSelector(postsState);
    const dispatch = useAppDispatch();
-
+   const activePost = posts.find((item) => item.active === true);
    const textInputRef = useRef<HTMLTextAreaElement>(null);
 
    const [colorValue, setColorValue] = useState("#000000");
@@ -23,13 +23,14 @@ export const Comments = () => {
          })
       );
       formRef.current?.reset();
-      setColorValue('#000')
+      setColorValue("#000");
    };
    return (
       <div className={styles.comments}>
-         <h2>Comments {activeId?.id}</h2>
+         <h2>Comments {activePost?.id}</h2>
          <ul className={styles.commentsList}>
-            {activeId?.comments.map(({ color, body, id }) => {
+            
+            {activePost?.comments.map(({ color, body, id }) => {
                return (
                   <li className={styles.commentsItem} key={id}>
                      <div

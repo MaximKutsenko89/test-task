@@ -4,16 +4,16 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { idGenerator } from "../utils";
 
 const storedPosts = JSON.parse(localStorage.getItem("posts") as string);
-const storedId = JSON.parse(localStorage.getItem("activeId") as string);
+
 const initialState: InitialState = {
    posts: storedPosts || [
       {
          id: idGenerator(10),
          name: "Test",
          comments: [{ id: "0", body: "test", color: "#000" }],
+         active: true,
       },
    ],
-   activeId: storedId || null,
 };
 
 export const postsSlice = createSlice({
@@ -23,33 +23,60 @@ export const postsSlice = createSlice({
       addPost: (state, action: PayloadAction<string>) => {
          state.posts = [
             ...state.posts,
-            { id: idGenerator(10), name: action.payload, comments: [] },
+            {
+               id: idGenerator(10),
+               name: action.payload,
+               comments: [],
+               active: false,
+            },
          ];
       },
 
       removePost: (state, action: PayloadAction<string>) => {
-         state.posts = state.posts.filter((item) => item.id !== action.payload);
-      },
-      
-      setActiveId: (state, action: PayloadAction<string>) => {
-         const foundPost = state.posts.find(
+         const removedPostIndex = state.posts.findIndex(
             (item) => item.id === action.payload
          );
-         state.activeId = foundPost ? foundPost : null;
+
+         if (removedPostIndex !== -1) {
+            if (state.posts[removedPostIndex].active) {
+               if (removedPostIndex + 1 < state.posts.length) {
+                  state.posts[removedPostIndex + 1].active = true;
+               } else if (removedPostIndex - 1 >= 0) {
+                  state.posts[removedPostIndex - 1].active = true;
+               }
+            }
+
+            state.posts.splice(removedPostIndex, 1);
+         }
+      },
+
+      setActiveId: (state, action: PayloadAction<string>) => {
+         state.posts = state.posts.map((item) => {
+            if (item.id === action.payload) {
+               state.posts.forEach((item) => (item.active = false));
+               return {
+                  ...item,
+                  active: true,
+               };
+            }
+            return item;
+         });
       },
       addComment: (
          state,
          action: PayloadAction<{ body: string; color: string }>
       ) => {
          const { body, color } = action.payload;
-         if (state.activeId) {
-            state.activeId.comments = [
-               ...state.activeId.comments,
+         const activePost = state.posts.find((item) => item.active === true);
+
+         if (activePost) {
+            activePost.comments = [
+               ...activePost.comments,
                { id: idGenerator(10), body, color },
             ];
             state.posts = state.posts.map((item) => {
-               if (item.id === state.activeId?.id) {
-                  return { ...state.activeId };
+               if (item.id === activePost?.id) {
+                  return { ...activePost };
                }
                return item;
             });

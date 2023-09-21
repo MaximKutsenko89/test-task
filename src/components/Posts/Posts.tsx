@@ -14,7 +14,7 @@ export const Posts = () => {
    const inputRef = useRef<HTMLInputElement>(null);
    const formRef = useRef<HTMLFormElement>(null);
 
-   const { posts, activeId } = useAppSelector(postsState);
+   const { posts } = useAppSelector(postsState);
    const dispatch = useAppDispatch();
 
    const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,9 +25,7 @@ export const Posts = () => {
    useEffect(() => {
       localStorage.setItem("posts", JSON.stringify(posts));
    }, [posts]);
-   useEffect(() => {
-      localStorage.setItem("activeId", JSON.stringify(activeId));
-   }, [activeId]);
+
 
    return (
       <div className={styles.post}>
@@ -47,11 +45,11 @@ export const Posts = () => {
             <Button info> Add New</Button>
          </form>
          <ul className={styles.postList}>
-            {posts.map(({ id, name, comments }) => {
+            {posts.map(({ id, name, comments, active }) => {
                return (
                   <li
                      className={clsx(styles.postItem, {
-                        [styles.postItemActive]: id === activeId?.id ,
+                        [styles.postItemActive]: active ,
                      })}
                      key={id}
                      onClick={() => dispatch(setActiveId(id))}
