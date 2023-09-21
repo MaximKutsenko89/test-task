@@ -26,7 +26,6 @@ export const Posts = () => {
       localStorage.setItem("posts", JSON.stringify(posts));
    }, [posts]);
 
-
    return (
       <div className={styles.post}>
          <h2>Items</h2>
@@ -49,7 +48,7 @@ export const Posts = () => {
                return (
                   <li
                      className={clsx(styles.postItem, {
-                        [styles.postItemActive]: active ,
+                        [styles.postItemActive]: active,
                      })}
                      key={id}
                      onClick={() => dispatch(setActiveId(id))}
